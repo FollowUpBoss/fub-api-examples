@@ -3,7 +3,7 @@
 # Follow Up Boss API examples.
 #
 # Sends a lead into Follow Up Boss when a buyer inquires about a specific property.
-# Can be used on any IDX website, mobile website or app that lists properties for sale of rent.
+# Can be used on any IDX website, mobile website or app that lists properties for sale or rent.
 #
 # More info: https://api.followupboss.com/api-documentation/
 #
