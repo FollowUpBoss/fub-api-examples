@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <script type="text/javascript" src="https://eia.followupboss.com/embeddedApps-v1.0.1.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+        <script type="text/javascript">
+            //App secret key
+            const secretKey = '94e6ea3983accb63e46f2316f051ebc7';
+
+            //Get URL information
+            const urlParams = new URLSearchParams(location.search);
+            var queryContext = urlParams.get('context');
+            var querySignature = urlParams.get('signature');
+
+            //Testing variables
+            var tempContext = 'eyJjb250ZXh0IjoicGVyc29uIiwiYWNjb3VudCI6eyJpZCI6MTA0ODU4OSwiZG9tYWluIjoiZGFudG9tY28iLCJvd25lciI6eyJuYW1lIjoiVG9tIE1pbmNoIiwiZW1haWwiOiJ0b20rZGV2QGZvbGxvd3VwYm9zcy5jb20ifX0sInVzZXIiOnsiaWQiOjQ0MCwibmFtZSI6IkMuTC4gTm9sZW4iLCJlbWFpbCI6ImNsQGZvbGxvd3VwYm9zcy5jb20ifSwicGVyc29uIjp7ImlkIjo1Mzk2MiwiZmlyc3ROYW1lIjoiTml2aWEiLCJsYXN0TmFtZSI6Ikd1ZXJyYSIsInBob25lcyI6W3sidmFsdWUiOiIoMjMzKSA1NTUtMDEyNCIsInR5cGUiOiJob21lIiwic3RhdHVzIjoiSW52YWxpZCIsImlzUHJpbWFyeSI6MSwibm9ybWFsaXplZCI6IjIzMzU1NTAxMjQiLCJyZWxhdGlvbnNoaXBJZCI6MCwiaXNMYW5kbGluZSI6bnVsbH1dLCJlbWFpbHMiOlt7InZhbHVlIjoibml2aWEuZ3VlcnJhQGZyb2IuZGV2IiwidHlwZSI6IndvcmsiLCJzdGF0dXMiOiJWYWxpZCIsImlzUHJpbWFyeSI6MSwicmVsYXRpb25zaGlwSWQiOjB9XSwic3RhZ2UiOnsiaWQiOjIsIm5hbWUiOiJMZWFkIn19fQ'
+            var tempSignature = 'd3c9aeed0ae0220a35e2699461edf61a92baeef0ddbf11da23226088ced7ef57'
+
+            //Validate signature
+            function isFromFollowUpBoss(context, signature){
+                var calculated = CryptoJS.HmacSHA256(context, secretKey).toString();
+                
+                return signature === calculated;
+            }
+
+            //Load up information
+            $(function() {
+                //Testing overrides
+                //queryContext = tempContext;
+                //querySignature = tempSignature;
+
+                var decodedContext = atob(queryContext);                
+                var isValid = isFromFollowUpBoss(queryContext, querySignature);
+
+                $('#context').html(decodedContext);
+                $('#signature').html(isValid);
+            })
+
+        </script>
+
+        <style>
+            html {
+                display: grid;
+                min-height: 241px;
+                min-width: 415px;
+              }
+
+            span {
+                word-wrap: break-word;
+            }
+        </style>
+    </head>
+    <body>
+        <p>The context is <span id="context"></span>.</p>
+        <p>The signature is <span id="signature"></span>.</p>
+    </body>
+</html>
